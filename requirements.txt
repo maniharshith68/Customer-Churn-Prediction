@@ -4,3 +4,7 @@ numpy
 matplotlib
 seaborn
 scikit-learn
+fastapi
+uvicorn
+shap
+streamlit
