@@ -51,6 +51,7 @@ This project predicts **customer churn** using a **logistic regression model imp
 
 ## 🗂 Project Structure
 
+```plaintext
 root/
 ├── data/
 │ ├── processed_customer_churn.csv
@@ -71,7 +72,7 @@ root/
 ├── README.md
 ├── requirements.txt
 └── start.sh
-
+```
 
 ---
 
