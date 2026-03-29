@@ -68,4 +68,18 @@ if st.button("Predict"):
         st.pyplot(fig)
 
     else:
-        st.error("API request failed")
+        try:
+            response = requests.post(API_URL, json=input_data, timeout=60)
+
+            st.write("Status Code:", response.status_code)
+            st.write("Response:", response.text)
+
+            if response.status_code == 200:
+                result = response.json()
+                st.success("Prediction successful!")
+                st.write(result)
+            else:
+                st.error("API error")
+
+        except Exception as e:
+            st.error(f"Error: {e}")
