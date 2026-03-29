@@ -13,7 +13,7 @@ st.title("Customer Churn Prediction")
 # -----------------------
 # Load model locally (for SHAP)
 # -----------------------
-with open("../model/churn_model.pkl", "rb") as f:
+with open("../models/churn_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 theta = model["theta"]
