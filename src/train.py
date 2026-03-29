@@ -166,6 +166,63 @@ X_np = X.values
 y_np = y
 cross_validate(X_np, y_np)
 
+# =========================
+# COLLECT METRICS
+# =========================
+
+# Accuracy on test set
+test_accuracy = accuracy(y_test, y_pred)
+
+# AUC on test set
+test_auc = roc_auc
+
+# Cross-validation metrics (recompute for storage, or modify cross_validate to return values)
+def cross_validate_metrics(X, y, k=5, alpha=0.01, iterations=1000):
+    kf = KFold(n_splits=k, shuffle=True, random_state=42)
+    accuracies = []
+    auc_scores = []
+
+    for train_index, test_index in kf.split(X):
+        X_train_cv, X_test_cv = X.values[train_index], X.values[test_index]
+        y_train_cv, y_test_cv = y.values[train_index], y.values[test_index]
+
+        scaler_cv = StandardScaler()
+        X_train_cv = scaler_cv.fit_transform(X_train_cv)
+        X_test_cv = scaler_cv.transform(X_test_cv)
+
+        X_train_cv = np.c_[np.ones((X_train_cv.shape[0], 1)), X_train_cv]
+        X_test_cv = np.c_[np.ones((X_test_cv.shape[0], 1)), X_test_cv]
+
+        theta_cv = np.zeros(X_train_cv.shape[1])
+        theta_cv, _ = gradientDescent(X_train_cv, y_train_cv, theta_cv, alpha, iterations)
+
+        y_prob_cv = predict(X_test_cv, theta_cv)
+        y_pred_cv = np.array([1 if i > 0.5 else 0 for i in y_prob_cv])
+
+        accuracies.append(np.mean(y_test_cv == y_pred_cv))
+        fpr_cv, tpr_cv, _ = roc_curve(y_test_cv, y_prob_cv)
+        auc_scores.append(auc(fpr_cv, tpr_cv))
+
+    return np.mean(accuracies), np.mean(auc_scores)
+
+cv_accuracy, cv_auc = cross_validate_metrics(X, pd.Series(y))
+
+# =========================
+# SAVE METRICS as pickle
+# =========================
+metrics = {
+    "accuracy": test_accuracy,
+    "auc": test_auc,
+    "cv_accuracy": cv_accuracy,
+    "cv_auc": cv_auc,
+    "fpr": fpr,
+    "tpr": tpr
+}
+
+with open("../models/churn_metrics.pkl", "wb") as f:
+    pickle.dump(metrics, f)
+
+print("Metrics saved successfully!")
 
 # =========================
 # NEW DATA PREDICTION
@@ -196,7 +253,8 @@ print(df2.head())
 model_artifacts = {
     "theta": theta,
     "scaler": scaler,   # make sure you renamed it earlier
-    "feature_names": X.columns.tolist()
+    "feature_names": X.columns.tolist(),
+    "X_train_sample": X.sample(100, random_state=42) # sample 100 rows for SHAP background
 }
 
 with open("../models/churn_model.pkl", "wb") as f:
