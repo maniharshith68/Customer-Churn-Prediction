@@ -120,21 +120,28 @@ root/
 
 1. Clone the repo:
 
-
-git clone https://github.com/<your-username>/customer-churn-prediction.git
-cd customer-churn-prediction
+```plaintext
+      git clone https://github.com/<your-username>/customer-churn-prediction.git
+      cd customer-churn-prediction
+```
 
 2. Install dependencies:
-
-pip install -r requirements.txt
+```plaintext
+      pip install -r requirements.txt
+```
 
 3. Run FastAPI API (optional):
-uvicorn src.main:app --reload
-
+```plaintext
+      uvicorn src.main:app --reload
+```
 4. Run Streamlit Dashboard:
-streamlit run app/app.py
 
+```plaintext
+      streamlit run app/app.py
+```
 5. By default, it uses local pickle files.
-To use API mode, set environment variable API_URL
 
-export API_URL = your_API_URL
+```plaintext
+      To use API mode, set environment variable API_URL
+      export API_URL = your api url here
+```
