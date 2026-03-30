@@ -1,6 +1,6 @@
 # Customer Churn Prediction
 
-![Churn Prediction](docs/churn-dashboard.png)
+![Churn Prediction](docs/churn_dashboard.png)
 
 This project predicts **customer churn** using a **logistic regression model implemented from scratch**, and showcases **end-to-end ML deployment** with explainable AI and interactive dashboards. It demonstrates how a data scientist can design production-grade ML pipelines, APIs, and visualization dashboards.
 
