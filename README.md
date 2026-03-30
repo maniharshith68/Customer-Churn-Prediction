@@ -1,6 +1,8 @@
 # Customer Churn Prediction
 
-![Churn Prediction](docs/Streamlit-Dashboard.pdf)
+![Churn Prediction](docs/Streamlit-Dashboard-1.png)
+![Churn Prediction](docs/Streamlit-Dashboard-2.png)
+![Churn Prediction](docs/Streamlit-Dashboard-3.png)
 
 This project predicts **customer churn** using a **logistic regression model implemented from scratch**, and showcases **end-to-end ML deployment** with explainable AI and interactive dashboards. It demonstrates how a data scientist can design production-grade ML pipelines, APIs, and visualization dashboards.
 
